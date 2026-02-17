@@ -26,7 +26,7 @@ Your out of luck cause those videos takes so much space. Luckily I made a tool f
 
 ## ⚠️ Caution
 I currently use gitbash on windows with ffmpeg.
-before continuing setup gitbash and download ffmpeg.
+before continuing, setup gitbash and download ffmpeg.
 Future commits might include a dedicated script for linux or windows.
 
 ## The script
