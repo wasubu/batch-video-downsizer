@@ -1,8 +1,8 @@
-# 📦 batch-video-downsizer (GitBash script)
+# 📦 6x batch-video-downsizer (GitBash script)
 
 ![Screenshot](batch_video_downsizer.jpg)
 Want to backup your videos for all those noslagic memories?
-Your out of luck cause those videos takes so much space. Luckily I made a tool for batch reducing the file size so you don't have to do each one manually!
+Your out of luck cause those videos takes so much space. Luckily I made a tool for batch reducing the file size of your videos so you don't have to do each one manually!
 
 ## Example conversions
 
@@ -30,7 +30,7 @@ before continuing, setup gitbash and download ffmpeg.
 Future commits might include a dedicated script for linux or windows.
 
 ## The script
-Copy and paste this on your windows gitbash terminal. Make sure to open the current directory contains all the video files you want to downsize.
+Copy and paste this on your windows gitbash terminal. Make sure to open the current directory that contains all the video files you want to downsize. Running the script **will not delete the ORIGINAL files** so make sure you still have drive space.
 ### CPU intensive (SLOW)
 ```bash
 mkdir -p ORIG_FILES CONVERTED_FILES && for f in *.mp4 *.MP4 *.mov *.MOV .*.mp4 .*.MP4 .*.mov .*.MOV *.mkv; do [ -e "$f" ] || continue; ctime=$(ffprobe -v quiet -show_entries format_tags=creation_time -of default=nw=1:nk=1 "$f"); ffmpeg -i "$f" -vf "scale='trunc(max(min(iw*0.7,if(gt(iw,ih),1920,1080)),if(gt(iw,ih),1280,720))/2)*2':'trunc(max(min(ih*0.7,if(gt(iw,ih),1080,1920)),if(gt(iw,ih),720,1280))/2)*2':flags=lanczos" -c:v libx264 -crf 23 -preset slow -c:a copy -metadata creation_time="$ctime" "CONVERTED_FILES/v1080_${f%.*}.mp4" && mv "$f" ORIG_FILES/; done
@@ -49,7 +49,7 @@ mkdir -p ORIG_FILES CONVERTED_FILES && for f in *.mp4 *.MP4 *.mov *.MOV .*.mp4 .
 - Uses slow preset for improved compression efficiency
 - Copies audio stream without re-encoding to preserve quality and speed
 - Preserves original media creation timestamp metadata
-- Automatically prefixes output filenames with v1080_
+- Automatically prefixes output filenames with v1080_  
 - Moves original files into ORIG_FILES after successful conversion
 - Saves converted files into CONVERTED_FILES for clean organization
 - Skips processing safely if no matching files exist
